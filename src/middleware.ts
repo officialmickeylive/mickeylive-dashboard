@@ -1,0 +1,81 @@
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { decodeJwt } from 'jose';
+
+const publicRoutes = ['/login', '/setup', '/api/auth/login'];
+
+export function middleware(request: NextRequest) {
+    const { pathname } = request.nextUrl;
+
+    // 1. Allow public routes
+    if (publicRoutes.some(route => pathname.startsWith(route))) {
+        return NextResponse.next();
+    }
+
+    // 2. Check for auth token
+    const token = request.cookies.get('auth_token')?.value;
+
+    if (!token) {
+        // No token, redirect to login
+        const loginUrl = new URL('/login', request.url);
+        return NextResponse.redirect(loginUrl);
+    }
+
+    try {
+        // 3. Decode token to get role
+        const decoded = decodeJwt(token) as { role?: string; roles?: string[] };
+        const role = decoded.role || (decoded.roles && decoded.roles[0]);
+
+        if (!role) {
+            // Token exists but no role, redirect to login
+            return NextResponse.redirect(new URL('/login', request.url));
+        }
+
+        // 4. Role-based path protection
+        const roleDashboardMap: Record<string, string> = {
+            APP_OWNER: '/app-owner',
+            SUPER_ADMIN: '/super-admin',
+            ADMIN: '/admin',
+            AGENCY: '/agency',
+            HOST: '/host',
+            SELLER: '/seller',
+            CUSTOMER: '/profile',
+        };
+
+        // Check if user is trying to access a dashboard route
+        const dashboardRoutes = Object.values(roleDashboardMap);
+        const requestedDashboard = dashboardRoutes.find(route => pathname.startsWith(route));
+
+        if (requestedDashboard) {
+            const allowedPath = roleDashboardMap[role];
+            if (!pathname.startsWith(allowedPath)) {
+                // Role mismatch, redirect to their correct dashboard
+                return NextResponse.redirect(new URL(`${allowedPath}/dashboard`, request.url));
+            }
+        }
+
+        // 5. Redirect logged in users away from login
+        if (pathname === '/login') {
+            const allowedPath = roleDashboardMap[role];
+            return NextResponse.redirect(new URL(`${allowedPath}/dashboard`, request.url));
+        }
+
+        return NextResponse.next();
+    } catch {
+        // Malformed token, redirect to login
+        return NextResponse.redirect(new URL('/login', request.url));
+    }
+}
+
+export const config = {
+    matcher: [
+        /*
+         * Match all request paths except for the ones starting with:
+         * - api (API routes)
+         * - _next/static (static files)
+         * - _next/image (image optimization files)
+         * - favicon.ico (favicon file)
+         */
+        '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    ],
+};
