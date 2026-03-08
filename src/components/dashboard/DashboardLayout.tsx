@@ -1,17 +1,22 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Sidebar } from './Sidebar';
 import { Topbar } from './Topbar';
+import { PageTransition } from '@/components/gaming/PageTransition';
 import { cn } from '@/lib/utils';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/store';
+import { setSidebarOpen } from '@/store/slices/uiSlice';
 
 export const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-    const [sidebarOpen, setSidebarOpen] = useState(true);
+    const dispatch = useDispatch();
+    const sidebarOpen = useSelector((state: RootState) => state.ui.sidebarOpen);
 
     return (
         <div className="min-h-screen bg-dark-bg text-text-primary">
-            <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
+            <Sidebar isOpen={sidebarOpen} setIsOpen={(v) => dispatch(setSidebarOpen(v))} />
 
             <motion.div
                 initial={false}
@@ -24,13 +29,9 @@ export const DashboardLayout = ({ children }: { children: React.ReactNode }) => 
                 <Topbar />
 
                 <main className="flex-1 p-6 overflow-x-hidden">
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4 }}
-                    >
+                    <PageTransition>
                         {children}
-                    </motion.div>
+                    </PageTransition>
                 </main>
 
                 {/* Mobile Overlay */}
@@ -39,9 +40,11 @@ export const DashboardLayout = ({ children }: { children: React.ReactNode }) => 
                         "fixed inset-0 bg-black/50 z-20 md:hidden transition-opacity duration-300",
                         sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
                     )}
-                    onClick={() => setSidebarOpen(false)}
+                    onClick={() => dispatch(setSidebarOpen(false))}
                 />
             </motion.div>
         </div>
     );
 };
+
+

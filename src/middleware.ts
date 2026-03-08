@@ -23,10 +23,10 @@ export function middleware(request: NextRequest) {
 
     try {
         // 3. Decode token to get role
-        const decoded = decodeJwt(token) as { role?: string; roles?: string[] };
-        const role = decoded.role || (decoded.roles && decoded.roles[0]);
+        const decoded = decodeJwt(token as string) as { role?: string; roles?: string[] };
+        const role = decoded.role || (decoded.roles?.[0]);
 
-        if (!role) {
+        if (typeof role !== 'string') {
             // Token exists but no role, redirect to login
             return NextResponse.redirect(new URL('/login', request.url));
         }
@@ -34,7 +34,7 @@ export function middleware(request: NextRequest) {
         // 4. Role-based path protection
         const roleDashboardMap: Record<string, string> = {
             APP_OWNER: '/app-owner',
-            SUPER_ADMIN: '/super-admin',
+            SUPER_ADMIN: '/app-owner', // Super Admin shares App Owner routes (except Trading)
             ADMIN: '/admin',
             AGENCY: '/agency',
             HOST: '/host',
@@ -42,13 +42,34 @@ export function middleware(request: NextRequest) {
             CUSTOMER: '/profile',
         };
 
+        const currentRole = role as keyof typeof roleDashboardMap;
+
+        // ── 4a. Explicit blocked routes per role ───────────────────────
+        // ADMIN: blocked from settings, coin-trading, and all app-owner routes
+        if (currentRole === 'ADMIN') {
+            const adminBlocked = ['/admin/settings', '/admin/coin-trading', '/admin/profile'];
+            const isBlocked =
+                pathname.startsWith('/app-owner') ||
+                adminBlocked.some(route => pathname.startsWith(route));
+            if (isBlocked) {
+                return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+            }
+        }
+
+        // SUPER_ADMIN: blocked from coin trading / trading page
+        if (currentRole === 'SUPER_ADMIN') {
+            if (pathname.startsWith('/app-owner/trading')) {
+                return NextResponse.redirect(new URL('/app-owner/dashboard', request.url));
+            }
+        }
+
         // Check if user is trying to access a dashboard route
         const dashboardRoutes = Object.values(roleDashboardMap);
         const requestedDashboard = dashboardRoutes.find(route => pathname.startsWith(route));
 
         if (requestedDashboard) {
-            const allowedPath = roleDashboardMap[role];
-            if (!pathname.startsWith(allowedPath)) {
+            const allowedPath = roleDashboardMap[currentRole];
+            if (allowedPath && !pathname.startsWith(allowedPath)) {
                 // Role mismatch, redirect to their correct dashboard
                 return NextResponse.redirect(new URL(`${allowedPath}/dashboard`, request.url));
             }
@@ -56,8 +77,10 @@ export function middleware(request: NextRequest) {
 
         // 5. Redirect logged in users away from login
         if (pathname === '/login') {
-            const allowedPath = roleDashboardMap[role];
-            return NextResponse.redirect(new URL(`${allowedPath}/dashboard`, request.url));
+            const allowedPath = roleDashboardMap[currentRole];
+            if (allowedPath) {
+                return NextResponse.redirect(new URL(`${allowedPath}/dashboard`, request.url));
+            }
         }
 
         return NextResponse.next();

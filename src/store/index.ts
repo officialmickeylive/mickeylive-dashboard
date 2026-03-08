@@ -12,11 +12,19 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import authReducer from './slices/authSlice';
+import uiReducer from './slices/uiSlice';
 import { authApi } from './api/authApi';
+import { usersApi } from './api/usersApi';
+import { financeApi } from './api/financeApi';
+import { liveApi } from './api/liveApi';
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    ui: uiReducer,
     [authApi.reducerPath]: authApi.reducer,
+    [usersApi.reducerPath]: usersApi.reducer,
+    [financeApi.reducerPath]: financeApi.reducer,
+    [liveApi.reducerPath]: liveApi.reducer,
 });
 
 const persistConfig = {
@@ -34,7 +42,12 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
-        }).concat(authApi.middleware),
+        }).concat(
+            authApi.middleware,
+            usersApi.middleware,
+            financeApi.middleware,
+            liveApi.middleware
+        ),
 });
 
 export const persistor = persistStore(store);

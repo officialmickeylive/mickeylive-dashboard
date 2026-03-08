@@ -1,0 +1,121 @@
+Launching browser...
+Navigating to login...
+PAGE LOG: %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold
+Typing credentials...
+Test error: Error: No element found for selector: input[type="email"]
+    at assert (/home/foridul/Desktop/remote--office-project/spark_live_frontend/node_modules/puppeteer-core/lib/cjs/puppeteer/util/assert.js:18:15)
+    at CdpFrame.type (/home/foridul/Desktop/remote--office-project/spark_live_frontend/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:885:40)
+    at async /home/foridul/Desktop/remote--office-project/spark_live_frontend/test-login.js:24:9
+PAGE ERROR: ChunkLoadError: Loading chunk app/layout failed.
+(timeout: http://localhost:3000/_next/static/chunks/app/layout.js)
+PAGE LOG: Warning: An error occurred during hydration. The server HTML was replaced with client content in <%s>. #document
+PAGE ERROR: ChunkLoadError: Loading chunk app/layout failed.
+(timeout: http://localhost:3000/_next/static/chunks/app/layout.js)
+PAGE ERROR: ChunkLoadError: Loading chunk app/layout failed.
+(timeout: http://localhost:3000/_next/static/chunks/app/layout.js)
+PAGE ERROR: ChunkLoadError: Loading chunk app/layout failed.
+(timeout: http://localhost:3000/_next/static/chunks/app/layout.js)
+PAGE LOG: The above error occurred in the <NotFoundErrorBoundary> component:
+
+    at Lazy
+    at body
+    at html
+    at RootLayout (Server)
+    at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/redirect-boundary.js:74:9)
+    at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/redirect-boundary.js:82:11)
+    at NotFoundErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/not-found-boundary.js:76:9)
+    at NotFoundBoundary (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/not-found-boundary.js:84:11)
+    at DevRootNotFoundBoundary (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/dev-root-not-found-boundary.js:33:11)
+    at ReactDevOverlay (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/ReactDevOverlay.js:87:9)
+    at HotReload (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:321:11)
+    at Router (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/app-router.js:207:11)
+    at ErrorBoundaryHandler (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/error-boundary.js:113:9)
+    at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/error-boundary.js:160:11)
+    at AppRouter (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/app-router.js:585:13)
+    at ServerRoot (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:112:27)
+    at Root (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:117:11)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ReactDevOverlay.
+PAGE ERROR: There was an error while hydrating. Because the error happened outside of a Suspense boundary, the entire root will switch to client rendering.
+See more info here: https://nextjs.org/docs/messages/react-hydration-error
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] performing full reload because your application had an unrecoverable error
+PAGE LOG: %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold
+PAGE LOG: [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 646ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 860ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 2543ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 1649ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 1270ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 3596ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 1394ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 1368ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 2219ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 1011ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 1829ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 2608ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 1152ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 2161ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 2339ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 1493ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 1390ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 1366ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 419ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 1696ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 144ms
+PAGE LOG: [Fast Refresh] done in 3951ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 204ms
+PAGE LOG: [Fast Refresh] done in 1618ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 1807ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 1363ms
+PAGE LOG: Failed to load resource: the server responded with a status of 404 (Not Found)
+PAGE ERROR: Event
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 42ms
+PAGE LOG: [Fast Refresh] rebuilding
+PAGE LOG: [Fast Refresh] done in 85ms
+PAGE LOG: [Fast Refresh] done in 3549ms
+PAGE LOG: Failed to load resource: the server responded with a status of 404 (Not Found)
+PAGE LOG: Failed to load resource: the server responded with a status of 404 (Not Found)
+PAGE LOG: Failed to load resource: the server responded with a status of 404 (Not Found)
+PAGE LOG: Failed to load resource: the server responded with a status of 404 (Not Found)
+
+  #  node[39272]: void node::ResetStdio() at ../src/node.cc:751
+  #  Assertion failed: !(err != 0) || (err == -1 && (*__errno_location ()) == 1)
+
+----- Native stack trace -----
+
+ 1: 0xcb2ef7 node::Assert(node::AssertionInfo const&) [node]
+ 2: 0xc5f924  [node]
+ 3: 0xc60d8c node::TearDownOncePerProcess() [node]
+ 4: 0xc66403 node::Start(int, char**) [node]
+ 5: 0x78e07fa2a1ca  [/lib/x86_64-linux-gnu/libc.so.6]
+ 6: 0x78e07fa2a28b __libc_start_main [/lib/x86_64-linux-gnu/libc.so.6]
+ 7: 0xbb614e _start [node]

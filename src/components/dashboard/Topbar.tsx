@@ -13,7 +13,10 @@ import {
     LogOut,
     Settings,
     HelpCircle,
-    ChevronDown
+    ChevronDown,
+    KeyRound,
+    ShieldCheck,
+    Lock
 } from 'lucide-react';
 import { RootState } from '@/store';
 import { logout } from '@/store/slices/authSlice';
@@ -28,6 +31,13 @@ export const Topbar = () => {
     const dispatch = useDispatch();
     const { user, role } = useSelector((state: RootState) => state.auth);
     const prefix = role ? ROLE_PATH_PREFIXES[role] : '';
+
+    const roleBadgeConfig: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
+        APP_OWNER: { label: 'App Owner', color: 'neon-gold', icon: <KeyRound size={12} /> },
+        SUPER_ADMIN: { label: 'Super Admin', color: 'neon-cyan', icon: <ShieldCheck size={12} /> },
+        ADMIN: { label: 'Admin', color: 'neon-purple', icon: <Lock size={12} /> },
+    };
+    const badge = role ? roleBadgeConfig[role] : null;
 
     const handleLogout = () => {
         dispatch(logout());
@@ -97,9 +107,15 @@ export const Topbar = () => {
                             <span className="text-xs font-bold text-text-primary uppercase truncate max-w-[120px]">
                                 {user?.name || 'Commander'}
                             </span>
-                            <span className="text-[10px] text-neon-cyan font-medium uppercase tracking-tighter">
-                                {role?.replace('_', ' ')}
-                            </span>
+                            {badge && (
+                                <span className={cn(
+                                    "flex items-center gap-1 text-[10px] font-black uppercase tracking-tighter px-2 py-0.5 rounded-full border",
+                                    `text-${badge.color} border-${badge.color}/30 bg-${badge.color}/10`
+                                )}>
+                                    {badge.icon}
+                                    {badge.label}
+                                </span>
+                            )}
                         </div>
                         <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-neon-cyan to-neon-purple p-[1px]">
                             <div className="w-full h-full rounded-[11px] bg-dark-bg flex items-center justify-center overflow-hidden">
@@ -137,9 +153,11 @@ export const Topbar = () => {
                                         <Link href={`${prefix}/profile`} className="flex items-center gap-3 px-3 py-2 text-sm text-text-muted hover:text-neon-cyan hover:bg-glass rounded-xl transition-all">
                                             <User size={16} /> <span>Profile</span>
                                         </Link>
-                                        <Link href={`${prefix}/settings`} className="flex items-center gap-3 px-3 py-2 text-sm text-text-muted hover:text-neon-cyan hover:bg-glass rounded-xl transition-all">
-                                            <Settings size={16} /> <span>Settings</span>
-                                        </Link>
+                                        {role !== 'ADMIN' && (
+                                            <Link href={`${prefix}/settings`} className="flex items-center gap-3 px-3 py-2 text-sm text-text-muted hover:text-neon-cyan hover:bg-glass rounded-xl transition-all">
+                                                <Settings size={16} /> <span>Settings</span>
+                                            </Link>
+                                        )}
                                         <Link href="/support" className="flex items-center gap-3 px-3 py-2 text-sm text-text-muted hover:text-neon-cyan hover:bg-glass rounded-xl transition-all">
                                             <HelpCircle size={16} /> <span>Help Sync</span>
                                         </Link>
