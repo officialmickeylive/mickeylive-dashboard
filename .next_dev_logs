@@ -1,0 +1,31 @@
+
+> spark_live_frontend@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.14
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 2.4s
+ ○ Compiling /src/middleware ...
+ ✓ Compiled /src/middleware in 1580ms (139 modules)
+ ○ Compiling /login ...
+ ✓ Compiled /login in 10.5s (1443 modules)
+redux-persist failed to create sync storage. falling back to noop storage.
+ GET /login 200 in 12210ms
+ ✓ Compiled in 1685ms (715 modules)
+ GET /login 200 in 270ms
+ ○ Compiling /api/auth/login ...
+ ✓ Compiled /api/auth/login in 4.3s (823 modules)
+ POST /api/auth/login 200 in 5074ms
+ ○ Compiling /app-owner/dashboard ...
+ ✓ Compiled /app-owner/dashboard in 28.5s (2612 modules)
+ ⨯ The requested resource "https://api.dicebear.com/7.x/avataaars/svg?seed=owner@spark.live" has type "image/svg+xml" but dangerouslyAllowSVG is disabled
+ ○ Compiling /app-owner/admins ...
+ ✓ Compiled /app-owner/admins in 2.6s (2535 modules)
+ ○ Compiling /app-owner/agencies ...
+ ✓ Compiled /app-owner/agencies in 2.4s (2547 modules)
+ ○ Compiling /app-owner/hosts ...
+ ✓ Compiled /app-owner/hosts in 4.7s (2561 modules)
+ ○ Compiling /app-owner/users ...
+ ✓ Compiled /app-owner/users in 3s (2579 modules)
