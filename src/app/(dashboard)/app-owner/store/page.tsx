@@ -22,6 +22,7 @@ const mockStoreItems = [
 ];
 
 export default function StoreSystemPage() {
+    
     const [searchTerm, setSearchTerm] = useState('');
     const [isInitializeModalOpen, setIsInitializeModalOpen] = useState(false);
 

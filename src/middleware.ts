@@ -36,9 +36,6 @@ export function middleware(request: NextRequest) {
             APP_OWNER: '/app-owner',
             SUPER_ADMIN: '/app-owner', // Super Admin shares App Owner routes (except Trading)
             ADMIN: '/admin',
-            AGENCY: '/agency',
-            HOST: '/host',
-            SELLER: '/seller',
             CUSTOMER: '/profile',
         };
 

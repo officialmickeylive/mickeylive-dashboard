@@ -59,6 +59,7 @@ export const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
             {/* Nav Items */}
             <div className="flex-1 overflow-y-auto py-4 px-3 space-y-2 custom-scrollbar">
                 {filteredNavItems.map((item) => {
+                    
                     const href = `${prefix}${item.href}`;
                     const isActive = pathname === href || (item.href !== '/dashboard' && pathname.startsWith(href));
                     const Icon = item.icon;
