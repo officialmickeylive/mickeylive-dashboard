@@ -15,7 +15,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-type Level = 'agency' | 'host' | 'user';
+type Level = 'agency' | 'host';
 const ITEMS_PER_PAGE = 5;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -58,18 +58,7 @@ const mockHosts: Record<string, any[]> = {
     AG7: [{ id: 'H10', name: 'Solar Titan',   email: 'titan@spark.live',  agencyId: 'AG7', roomName: 'Sun Arena',    userCount: 420, status: 'LIVE',    earnings: 96000, totalHours: 680, activeDays: 60, joinDate: '2022-06-01' }],
 };
 
-const allUsers = [
-    { id: 'U1',  name: 'Nebula Knight',  email: 'nk@void.com',  joinType: 'CURRENT',  coins: 8400,  diamonds: 120,  level: 28, lastSeen: 'Now',       hostId: 'H1', totalSpent: 4200,  liveHours: 18, activeDays: 12, joinDate: '2023-06-01' },
-    { id: 'U2',  name: 'Void Walker',    email: 'vw@null.ptr',  joinType: 'CURRENT',  coins: 1200,  diamonds: 0,    level: 8,  lastSeen: 'Now',       hostId: 'H1', totalSpent: 600,   liveHours: 5,  activeDays: 4,  joinDate: '2024-01-15' },
-    { id: 'U3',  name: 'Solar Flare',    email: 'sf@nova.org',  joinType: 'PAST',     coins: 45000, diamonds: 2100, level: 56, lastSeen: '2h ago',    hostId: 'H1', totalSpent: 22000, liveHours: 140,activeDays: 60, joinDate: '2022-09-10' },
-    { id: 'U4',  name: 'Cyber Phantom',  email: 'cp@ghost.net', joinType: 'PAST',     coins: 0,     diamonds: 5,    level: 15, lastSeen: '1d ago',    hostId: 'H3', totalSpent: 200,   liveHours: 8,  activeDays: 6,  joinDate: '2023-11-20' },
-    { id: 'U5',  name: 'Alpha Draconis', email: 'ad@matrix.io', joinType: 'UPCOMING', coins: 15200, diamonds: 450,  level: 42, lastSeen: 'Scheduled', hostId: 'H3', totalSpent: 7600,  liveHours: 55, activeDays: 30, joinDate: '2023-03-05' },
-    { id: 'U6',  name: 'Pulse King',     email: 'pk@pulse.net', joinType: 'CURRENT',  coins: 9800,  diamonds: 310,  level: 38, lastSeen: 'Now',       hostId: 'H5', totalSpent: 4900,  liveHours: 48, activeDays: 25, joinDate: '2023-04-22' },
-    { id: 'U7',  name: 'Frost Byte',     email: 'fb@frost.io',  joinType: 'PAST',     coins: 4200,  diamonds: 90,   level: 18, lastSeen: '3h ago',    hostId: 'H7', totalSpent: 2100,  liveHours: 14, activeDays: 9,  joinDate: '2023-10-01' },
-    { id: 'U8',  name: 'Binary Ghost',   email: 'bg@ghost.io',  joinType: 'CURRENT',  coins: 11000, diamonds: 220,  level: 31, lastSeen: 'Now',       hostId: 'H7', totalSpent: 5500,  liveHours: 62, activeDays: 32, joinDate: '2023-05-14' },
-    { id: 'U9',  name: 'Nova Shard',     email: 'ns@nova.net',  joinType: 'UPCOMING', coins: 700,   diamonds: 0,    level: 5,  lastSeen: 'Scheduled', hostId: 'H9', totalSpent: 350,   liveHours: 2,  activeDays: 2,  joinDate: '2024-02-28' },
-    { id: 'U10', name: 'Storm Rider',    email: 'sr@storm.io',  joinType: 'CURRENT',  coins: 3200,  diamonds: 80,   level: 22, lastSeen: 'Now',       hostId: 'H9', totalSpent: 1600,  liveHours: 22, activeDays: 14, joinDate: '2023-08-18' },
-];
+
 
 const historyData: Record<string, any[]> = {
     U1: [
@@ -120,7 +109,6 @@ const HMETA: Record<string, { label: string; tc: string; bg: string; bc: string 
 const LC: Record<Level, { color: string; rgb: string; tw: string }> = {
     agency: { color: 'neon-green',  rgb: '0,255,100',  tw: 'text-neon-green'  },
     host:   { color: 'neon-cyan',   rgb: '0,255,255',  tw: 'text-neon-cyan'   },
-    user:   { color: 'neon-purple', rgb: '191,0,255',  tw: 'text-neon-purple' },
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -333,13 +321,7 @@ function DetailModal({ item, level, isOpen, onClose }: { item: any; level: Level
             { label: 'Live Hrs',    value: `${item.totalHours ?? 0}h`,                 icon: '⏱',  tc: 'text-neon-cyan'   },
             { label: 'Days Active', value: `${item.activeDays ?? 0}d`,                 icon: '📅', tc: 'text-neon-green'  },
             { label: 'Live Users',  value: `${item.userCount ?? 0}`,                   icon: '👥', tc: 'text-neon-purple' },
-        ];
-        return [
-            { label: 'Coins',       value: item.coins?.toLocaleString() ?? '0',        icon: '🪙', tc: 'text-neon-gold'   },
-            { label: 'Diamonds',    value: item.diamonds?.toLocaleString() ?? '0',     icon: '💎', tc: 'text-neon-purple' },
-            { label: 'Live Hrs',    value: `${item.liveHours ?? 0}h`,                  icon: '⏱',  tc: 'text-neon-cyan'   },
-            { label: 'Days Active', value: `${item.activeDays ?? 0}d`,                 icon: '📅', tc: 'text-neon-green'  },
-        ];
+        ]
     }, [item, level]);
 
     const histLabel = level === 'agency' ? 'Revenue History' : level === 'host' ? 'Earning History' : 'Transaction History';
@@ -398,7 +380,7 @@ function DetailModal({ item, level, isOpen, onClose }: { item: any; level: Level
                                 {/* Body */}
                                 <div className="flex-1 overflow-y-auto overscroll-contain">
                                     {/* Stats */}
-                                    <div className="px-5 pt-5 pb-4">
+                                    {/* <div className="px-5 pt-5 pb-4">
                                         <SLabel text="Overview" />
                                         <div className={cn('grid gap-2 mt-3', stats.length === 4 ? 'grid-cols-4' : 'grid-cols-3')}>
                                             {stats.map(({ label, value, icon, tc }) => (
@@ -409,7 +391,7 @@ function DetailModal({ item, level, isOpen, onClose }: { item: any; level: Level
                                                 </div>
                                             ))}
                                         </div>
-                                    </div>
+                                    </div> */}
                                     {/* Details */}
                                     <div className="px-5 pb-4 space-y-1.5">
                                         <SLabel text="Details" />
@@ -422,12 +404,7 @@ function DetailModal({ item, level, isOpen, onClose }: { item: any; level: Level
                                                 <IRow label="Room"   value={item.roomName} vc="text-neon-cyan" />
                                                 <IRow label="Status" value={item.status}   vc={item.status === 'LIVE' ? 'text-neon-green' : 'text-neon-red'} />
                                             </>}
-                                            {level === 'user' && <>
-                                                <IRow label="Join Type"   value={item.joinType}                      vc={item.joinType === 'CURRENT' ? 'text-neon-green' : item.joinType === 'UPCOMING' ? 'text-neon-gold' : 'text-white/40'} />
-                                                <IRow label="Level"       value={`LVL ${item.level}`}               vc="text-neon-cyan" />
-                                                <IRow label="Total Spent" value={`${item.totalSpent?.toLocaleString() ?? 0} coins`} vc="text-neon-red" />
-                                                <IRow label="Last Seen"   value={item.lastSeen}                      vc="text-white/40" />
-                                            </>}
+            
                                         </div>
                                     </div>
                                     {/* History */}
@@ -809,7 +786,7 @@ export default function AgencyManagementPage() {
     const currentData = useMemo(() => {
         if (level === 'agency') return agencies;
         if (level === 'host')   return hosts[selectedAgency?.id] ?? [];
-        return allUsers.filter(u => u.hostId === selectedHost?.id);
+        return []
     }, [level, agencies, hosts, selectedAgency, selectedHost]);
 
     const filtered = useMemo(() => currentData.filter((r: any) =>
@@ -841,7 +818,6 @@ export default function AgencyManagementPage() {
     const levelMeta: Record<Level, { title: string; desc: string }> = {
         agency: { title: 'Agency Infrastructure',               desc: 'Management and revenue tracking of registered agency units' },
         host:   { title: `Hosts — ${selectedAgency?.name}`,     desc: 'All hosts registered under this agency'                     },
-        user:   { title: `Users — ${selectedHost?.roomName}`,   desc: 'Current, past and upcoming room participants'               },
     };
 
     // ── Columns ───────────────────────────────────────────────────────────────
@@ -912,47 +888,13 @@ export default function AgencyManagementPage() {
             accessor: (h) => (
                 <div className="flex items-center gap-1">
                     <EyeBtn onClick={(e) => openDetail(e, h)} />
-                    <TransferBtn onClick={(e) => { e.stopPropagation(); setTransferHost(h); }} color="neon-cyan" />
-                    <button onClick={(e) => drillInto(e, 'user', setSelectedHost, h)}
-                        className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-neon-cyan/10 hover:bg-neon-cyan/20 border border-neon-cyan/20 hover:border-neon-cyan/40 text-neon-cyan text-[10px] font-black uppercase tracking-widest transition-all">
-                        <Users size={11} /><ChevronRight size={10} />
-                    </button>
                 </div>
             ),
         },
     ];
 
-    const userCols: Column<any>[] = [
-        {
-            header: 'User',
-            accessor: (u) => (
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-white/5 border border-card-border flex items-center justify-center text-text-primary font-black text-xs">
-                        {u.name.split(' ').map((n: string) => n[0]).join('')}
-                    </div>
-                    <div>
-                        <div className="font-bold text-text-primary text-sm">{u.name}</div>
-                        <div className="text-[10px] text-text-muted">{u.email}</div>
-                    </div>
-                </div>
-            ),
-        },
-        { header: 'Join Type', accessor: (u) => (
-            <span className={cn('px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-widest border',
-                u.joinType === 'CURRENT'  ? 'text-neon-green  border-neon-green/30  bg-neon-green/10'
-                : u.joinType === 'UPCOMING' ? 'text-neon-gold   border-neon-gold/30   bg-neon-gold/10'
-                :                             'text-text-muted  border-card-border    bg-white/5')}>
-                {u.joinType}
-            </span>
-        )},
-        { header: 'Level',    accessor: (u) => <span className="text-neon-cyan   font-black text-xs">LVL {u.level}</span> },
-        { header: 'Coins',    accessor: (u) => <span className="text-neon-gold   font-black text-xs">{u.coins.toLocaleString()}</span> },
-        { header: 'Diamonds', accessor: (u) => <span className="text-neon-purple font-black text-xs">{u.diamonds}</span> },
-        { header: 'Last Seen',accessor: (u) => <span className="text-[10px] text-text-muted">{u.lastSeen}</span> },
-        { header: 'Detail',   accessor: (u) => <EyeBtn onClick={(e) => openDetail(e, u)} /> },
-    ];
 
-    const colMap = { agency: agencyCols, host: hostCols, user: userCols };
+    const colMap = { agency: agencyCols, host: hostCols };
 
     return (
         <PageContainer>

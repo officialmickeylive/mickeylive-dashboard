@@ -14,7 +14,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-type Level = 'admin' | 'agency' | 'host' | 'user';
+type Level = 'admin' | 'agency' | 'host';
 const ITEMS_PER_PAGE = 5;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -165,17 +165,10 @@ const LC: Record<Level, { color: string; rgb: string; tw: string }> = {
     admin:  { color: 'neon-purple', rgb: '191,0,255', tw: 'text-neon-purple' },
     agency: { color: 'neon-gold',   rgb: '255,215,0', tw: 'text-neon-gold'   },
     host:   { color: 'neon-cyan',   rgb: '0,255,255', tw: 'text-neon-cyan'   },
-    user:   { color: 'neon-green',  rgb: '0,255,100', tw: 'text-neon-green'  },
 };
 
 // ── Role stats cards ──────────────────────────────────────────────────────────
 function getStats(item: any, level: Level) {
-    if (level === 'user') return [
-        { label: 'Coins',       value: item.coins?.toLocaleString() ?? '0',    icon: '🪙', tc: 'text-neon-gold'   },
-        { label: 'Diamonds',    value: item.diamonds?.toLocaleString() ?? '0', icon: '💎', tc: 'text-neon-purple' },
-        { label: 'Live Hrs',    value: `${item.liveHours ?? 0}h`,              icon: '⏱',  tc: 'text-neon-cyan'   },
-        { label: 'Days Active', value: `${item.activeDays ?? 0}d`,             icon: '📅', tc: 'text-neon-green'  },
-    ];
     if (level === 'host') return [
         { label: 'Earned',      value: item.earnings?.toLocaleString() ?? '0', icon: '💰', tc: 'text-neon-gold'   },
         { label: 'Live Hrs',    value: `${item.totalHours ?? 0}h`,             icon: '⏱',  tc: 'text-neon-cyan'   },
@@ -195,7 +188,6 @@ function getStats(item: any, level: Level) {
 }
 
 function histLabel(l: Level) {
-    if (l === 'user')   return 'Transaction History';
     if (l === 'host')   return 'Earning History';
     if (l === 'agency') return 'Revenue History';
     return 'Activity Log';
@@ -329,12 +321,7 @@ function DetailModal({ item, level, isOpen, onClose }: { item: any; level: Level
                                     <div className="px-5 pb-4 space-y-1.5">
                                         <SLabel text="Details" />
                                         <div className="mt-3 space-y-1.5">
-                                            {level === 'user' && <>
-                                                <IRow label="Join Type"   value={item.joinType}              vc={item.joinType === 'CURRENT' ? 'text-neon-green' : item.joinType === 'UPCOMING' ? 'text-neon-gold' : 'text-white/40'} />
-                                                <IRow label="Level"       value={`LVL ${item.level}`}        vc="text-neon-cyan" />
-                                                <IRow label="Total Spent" value={`${item.totalSpent?.toLocaleString() ?? 0} coins`} vc="text-neon-red" />
-                                                <IRow label="Last Seen"   value={item.lastSeen}              vc="text-white/40" />
-                                            </>}
+                                         
                                             {level === 'host' && <>
                                                 <IRow label="Room"   value={item.roomName} vc="text-neon-cyan" />
                                                 <IRow label="Status" value={item.status}   vc={item.status === 'LIVE' ? 'text-neon-green' : 'text-neon-red'} />
@@ -626,6 +613,7 @@ function Divider({ label }: { label: string }) {
 // MAIN PAGE
 // ─────────────────────────────────────────────────────────────────────────────
 export default function AdminManagementPage() {
+
     const [search, setSearch]                 = useState('');
     const [level, setLevel]                   = useState<Level>('admin');
     const [selectedAdmin, setSelectedAdmin]   = useState<any>(null);
@@ -677,8 +665,7 @@ export default function AdminManagementPage() {
     const levelMeta: Record<Level, { title: string; desc: string }> = {
         admin:  { title: 'Admin Control Matrix',                   desc: 'High-level security permissions and admin oversight' },
         agency: { title: `Agencies — ${selectedAdmin?.name}`,      desc: 'All agencies managed by this admin'                  },
-        host:   { title: `Hosts — ${selectedAgency?.name}`,        desc: 'All hosts registered in this agency'                 },
-        user:   { title: `Users — ${selectedHost?.roomName}`,      desc: 'Current, past and upcoming room participants'        },
+        host:   { title: `Hosts — ${selectedAgency?.name}`,        desc: 'All hosts registered in this agency'                 }
     };
 
     // ── Columns ───────────────────────────────────────────────────────────────
@@ -765,45 +752,12 @@ export default function AdminManagementPage() {
         { header: 'Actions',    accessor: (h) => (
             <div className="flex items-center gap-1">
                 <EyeBtn onClick={(e) => openDetail(e, h)} />
-                <button onClick={(e) => drillInto(e, 'user', setSelectedHost, h)}
-                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-neon-cyan/10 hover:bg-neon-cyan/20 border border-neon-cyan/20 hover:border-neon-cyan/40 text-neon-cyan text-[10px] font-black uppercase tracking-widest transition-all">
-                    <Users size={11} /><ChevronRight size={10} />
-                </button>
             </div>
         )},
     ];
 
-    const userCols: Column<any>[] = [
-        {
-            header: 'User',
-            accessor: (u) => (
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-white/5 border border-card-border flex items-center justify-center text-text-primary font-black text-xs">
-                        {u.name.split(' ').map((n: string) => n[0]).join('')}
-                    </div>
-                    <div>
-                        <div className="font-bold text-text-primary text-sm">{u.name}</div>
-                        <div className="text-[10px] text-text-muted">{u.email}</div>
-                    </div>
-                </div>
-            ),
-        },
-        { header: 'Join Type', accessor: (u) => (
-            <span className={cn('px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-widest border',
-                u.joinType === 'CURRENT'  ? 'text-neon-green  border-neon-green/30  bg-neon-green/10'
-                : u.joinType === 'UPCOMING' ? 'text-neon-gold   border-neon-gold/30   bg-neon-gold/10'
-                : 'text-text-muted border-card-border bg-white/5')}>
-                {u.joinType}
-            </span>
-        )},
-        { header: 'Level',    accessor: (u) => <span className="text-neon-cyan   font-black text-xs">LVL {u.level}</span> },
-        { header: 'Coins',    accessor: (u) => <span className="text-neon-gold   font-black text-xs">{u.coins.toLocaleString()}</span> },
-        { header: 'Diamonds', accessor: (u) => <span className="text-neon-purple font-black text-xs">{u.diamonds}</span> },
-        { header: 'Last Seen',accessor: (u) => <span className="text-[10px] text-text-muted">{u.lastSeen}</span> },
-        { header: 'Detail',   accessor: (u) => <EyeBtn onClick={(e) => openDetail(e, u)} /> },
-    ];
 
-    const colMap = { admin: adminCols, agency: agencyCols, host: hostCols, user: userCols };
+    const colMap = { admin: adminCols, agency: agencyCols, host: hostCols };
 
     return (
         <PageContainer>
