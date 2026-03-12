@@ -339,56 +339,6 @@ function AddHostModal({ open, onClose, onAdd }: {open:boolean;onClose:()=>void;o
   );
 }
 
-// ─── TRANSFER MODAL ───────────────────────────────────────────────────────────
-function TransferModal({ open, host, onClose, onTransfer }: {open:boolean;host:any;onClose:()=>void;onTransfer:(id:string,agId:string)=>void}) {
-  const [sel, setSel] = useState("");
-  if (!host) return null;
-  return (
-    <Modal open={open} onClose={onClose} accent="#22c55e" maxW={420}>
-      <MHead icon={<I.Swap/>} sup="Super Admin · Agency Transfer" title="Transfer Host" onClose={onClose} accent="#22c55e"/>
-      <div style={{padding:"18px 22px"}}>
-        <div style={{display:"flex",alignItems:"center",gap:10,padding:"11px 14px",borderRadius:13,background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.07)",marginBottom:14}}>
-          <div style={{width:36,height:36,borderRadius:11,background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.12)",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900,fontSize:11,color:"rgba(255,255,255,0.65)",flexShrink:0}}>
-            {host.name.split(" ").map((n:string)=>n[0]).join("")}
-          </div>
-          <div style={{flex:1}}>
-            <div style={{fontWeight:800,fontSize:13,color:"#fff"}}>{host.name}</div>
-            <div style={{fontSize:9,color:"rgba(255,255,255,0.32)",marginTop:1}}>{host.roomName}</div>
-          </div>
-          <div style={{textAlign:"right"}}>
-            <div style={{fontSize:8,color:"rgba(255,255,255,0.2)",textTransform:"uppercase",letterSpacing:"0.12em"}}>Current</div>
-            <div style={{fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.45)",maxWidth:110,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{host.agency}</div>
-          </div>
-        </div>
-        <p style={{fontSize:9,textAlign:"center",color:"rgba(34,197,94,0.45)",margin:"0 0 10px",letterSpacing:"0.1em"}}>↓ SELECT DESTINATION AGENCY</p>
-        <div style={{display:"flex",flexDirection:"column",gap:5,maxHeight:210,overflowY:"auto"}}>
-          {AGENCIES.filter(a => a.id !== host.agencyId).map(ag => {
-            const on = sel === ag.id;
-            return (
-              <button key={ag.id} onClick={()=>setSel(ag.id)} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 13px",borderRadius:11,background:on?"rgba(34,197,94,0.09)":"rgba(255,255,255,0.03)",border:`1px solid ${on?"rgba(34,197,94,0.4)":"rgba(255,255,255,0.07)"}`,cursor:"pointer",textAlign:"left",transition:"all .18s",fontFamily:"inherit",outline:"none"}}>
-                <div style={{width:32,height:32,borderRadius:9,background:on?"rgba(34,197,94,0.15)":"rgba(255,255,255,0.06)",border:`1px solid ${on?"rgba(34,197,94,0.4)":"rgba(255,255,255,0.1)"}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:900,color:on?"#22c55e":"rgba(255,255,255,0.4)"}}>
-                  {ag.name.split(" ").map(n=>n[0]).join("")}
-                </div>
-                <div style={{flex:1}}>
-                  <div style={{fontSize:11,fontWeight:700,color:on?"#fff":"rgba(255,255,255,0.62)"}}>{ag.name}</div>
-                  <div style={{fontSize:8,color:"rgba(255,255,255,0.25)",textTransform:"uppercase",letterSpacing:"0.12em"}}>{ag.tier}</div>
-                </div>
-                <span style={{fontSize:8,fontWeight:900,textTransform:"uppercase",padding:"2px 7px",borderRadius:5,background:ag.status==="ACTIVE"?"rgba(34,197,94,0.1)":"rgba(255,60,60,0.1)",border:`1px solid ${ag.status==="ACTIVE"?"rgba(34,197,94,0.3)":"rgba(255,60,60,0.3)"}`,color:ag.status==="ACTIVE"?"#22c55e":"#ff5555"}}>{ag.status}</span>
-                {on && <span style={{color:"#22c55e",flexShrink:0}}><I.Check/></span>}
-              </button>
-            );
-          })}
-        </div>
-        <div style={{display:"flex",gap:8,marginTop:14}}>
-          <button disabled={!sel} onClick={()=>{if(sel){onTransfer(host.id,sel);setSel("");onClose();}}}
-            style={{flex:1,height:38,borderRadius:11,background:sel?"rgba(34,197,94,0.1)":"rgba(255,255,255,0.03)",border:`1px solid ${sel?"rgba(34,197,94,0.35)":"rgba(255,255,255,0.07)"}`,color:sel?"#22c55e":"rgba(255,255,255,0.2)",fontSize:11,fontWeight:800,cursor:sel?"pointer":"not-allowed",fontFamily:"inherit"}}>✓ Confirm Transfer</button>
-          <button onClick={onClose} style={{flex:1,height:38,borderRadius:11,background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.08)",color:"rgba(255,255,255,0.4)",fontSize:11,fontWeight:800,cursor:"pointer",fontFamily:"inherit"}}>Cancel</button>
-        </div>
-      </div>
-    </Modal>
-  );
-}
-
 // ─── TRANSACTION MODAL (left card + right table) ──────────────────────────────
 const TPP = 7;
 function TransactionModal({ open, host, onClose }: {open:boolean;host:any;onClose:()=>void}) {
@@ -823,10 +773,7 @@ export default function HostManagementPage() {
                   </div>
                   {/* Actions */}
                   <div style={{display:"flex",alignItems:"center",gap:4}} onClick={e=>e.stopPropagation()}>
-                    <AB color="purple" title="View Transactions"  onClick={()=>setTxHost(host)}><I.Trend/></AB>
                     <AB color="cyan"   title="Host Profile"       onClick={()=>setTxHost(host)}><I.Eye/></AB>
-                    <AB color="green"  title="Transfer to Agency" onClick={()=>setTransH(host)}><I.Swap/></AB>
-                    <AB color="red"    title="Security Audit"     onClick={()=>{}}><I.Shield/></AB>
                   </div>
                 </motion.div>
               );
@@ -839,7 +786,6 @@ export default function HostManagementPage() {
 
       {/* MODALS */}
       <AddHostModal      open={addOpen}    onClose={()=>setAddOpen(false)} onAdd={handleAdd} />
-      <TransferModal     open={!!transH}   host={transH}                   onClose={()=>setTransH(null)} onTransfer={handleTransfer} />
       <TransactionModal  open={!!txHost}   host={txHost}                   onClose={()=>setTxHost(null)} />
     </div>
   );

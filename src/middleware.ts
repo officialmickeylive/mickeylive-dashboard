@@ -44,7 +44,7 @@ export function middleware(request: NextRequest) {
         // ── 4a. Explicit blocked routes per role ───────────────────────
         // ADMIN: blocked from settings, coin-trading, and all app-owner routes
         if (currentRole === 'ADMIN') {
-            const adminBlocked = ['/admin/settings', '/admin/coin-trading', '/admin/profile'];
+            const adminBlocked = ['/admin/coin-trading', '/admin/profile'];
             const isBlocked =
                 pathname.startsWith('/app-owner') ||
                 adminBlocked.some(route => pathname.startsWith(route));

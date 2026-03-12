@@ -654,6 +654,7 @@ function OnboardAgencyModal({ isOpen, onClose, onAdd }: { isOpen: boolean; onClo
     const set = (k: keyof AgencyForm) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setForm(p => ({ ...p, [k]: e.target.value })); setErrs(p => ({ ...p, [k]: '' }));
     };
+    
     const validate = () => {
         const e: Partial<AgencyForm> = {};
         if (!form.name.trim())  e.name  = 'Required';
@@ -661,6 +662,7 @@ function OnboardAgencyModal({ isOpen, onClose, onAdd }: { isOpen: boolean; onClo
         if (!form.owner.trim()) e.owner = 'Required';
         setErrs(e); return !Object.keys(e).length;
     };
+
     const submit = () => {
         if (!validate()) return;
         onAdd({
@@ -686,7 +688,7 @@ function OnboardAgencyModal({ isOpen, onClose, onAdd }: { isOpen: boolean; onClo
                         <motion.div initial={{ opacity: 0, scale: 0.93, y: 16 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.93 }}
                             transition={{ type: 'spring', stiffness: 320, damping: 26 }}
                             className="pointer-events-auto w-full max-w-md relative">
-                            <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-neon-green/20 to-transparent blur-md" />
+                            <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-neon-cyan/20 to-transparent blur-md" />
                             <div className="relative rounded-2xl border border-neon-green/20 bg-dark-bg overflow-hidden">
                                 <motion.div animate={{ x: ['-100%','200%'] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'linear', repeatDelay: 4 }}
                                     className="absolute top-0 left-0 w-1/2 h-px bg-gradient-to-r from-transparent via-neon-green to-transparent z-10" />

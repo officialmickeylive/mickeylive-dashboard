@@ -823,10 +823,8 @@ export default function HostManagementPage() {
                   </div>
                   {/* Actions */}
                   <div style={{display:"flex",alignItems:"center",gap:4}} onClick={e=>e.stopPropagation()}>
-                    <AB color="purple" title="View Transactions"  onClick={()=>setTxHost(host)}><I.Trend/></AB>
                     <AB color="cyan"   title="Host Profile"       onClick={()=>setTxHost(host)}><I.Eye/></AB>
                     <AB color="green"  title="Transfer to Agency" onClick={()=>setTransH(host)}><I.Swap/></AB>
-                    <AB color="red"    title="Security Audit"     onClick={()=>{}}><I.Shield/></AB>
                   </div>
                 </motion.div>
               );

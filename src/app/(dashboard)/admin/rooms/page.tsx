@@ -279,7 +279,7 @@ function RoomDetailModal({ room, open, onClose }: { room: typeof ROOMS_RAW[0] | 
               <div>
                 {/* thead */}
                 <div style={{display:'grid',gridTemplateColumns:'2fr 0.8fr 0.7fr 0.9fr 0.9fr 0.6fr 0.8fr',padding:'8px 22px',borderBottom:'1px solid rgba(255,255,255,0.06)',background:'rgba(0,0,0,0.3)'}}>
-                  {['Viewer','Type','Country','Level','Coins','Diamonds','Action'].map(h => (
+                  {['Viewer','Type','Country','Level','Coins','Diamonds'].map(h => (
                     <div key={h} style={{fontSize:8,fontWeight:900,textTransform:'uppercase',letterSpacing:'0.2em',color:'rgba(255,255,255,0.25)'}}>{h}</div>
                   ))}
                 </div>
@@ -322,7 +322,7 @@ function RoomDetailModal({ room, open, onClose }: { room: typeof ROOMS_RAW[0] | 
                           : <span style={{fontSize:11,color:'rgba(255,255,255,0.15)'}}>—</span>}
                       </div>
                       {/* Action — kick */}
-                      <div style={{display:'flex',alignItems:'center'}}>
+                      {/* <div style={{display:'flex',alignItems:'center'}}>
                         {confirmId === aud.id ? (
                           <div style={{display:'flex',gap:4}}>
                             <button onClick={()=>handleKick(aud.id)}
@@ -342,7 +342,7 @@ function RoomDetailModal({ room, open, onClose }: { room: typeof ROOMS_RAW[0] | 
                             <I.Kick/>
                           </button>
                         )}
-                      </div>
+                      </div> */}
                     </div>
                   ))
                 }
@@ -578,18 +578,7 @@ export default function RoomManagementPage() {
                     onMouseLeave={e=>{(e.currentTarget as HTMLButtonElement).style.background='rgba(0,255,255,0.07)';}}>
                     <I.Users/>
                   </button>
-                  <button title="Monitor Stream"
-                    style={{width:30,height:30,borderRadius:9,background:'rgba(168,85,247,0.07)',border:'1px solid rgba(168,85,247,0.18)',color:'#a855f7',display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',transition:'all .17s'}}
-                    onMouseEnter={e=>{(e.currentTarget as HTMLButtonElement).style.background='rgba(168,85,247,0.18)';}}
-                    onMouseLeave={e=>{(e.currentTarget as HTMLButtonElement).style.background='rgba(168,85,247,0.07)';}}>
-                    <I.Monitor/>
-                  </button>
-                  <button title="Security Flag"
-                    style={{width:30,height:30,borderRadius:9,background:'rgba(255,68,68,0.07)',border:'1px solid rgba(255,68,68,0.18)',color:'#ff5555',display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',transition:'all .17s'}}
-                    onMouseEnter={e=>{(e.currentTarget as HTMLButtonElement).style.background='rgba(255,68,68,0.18)';}}
-                    onMouseLeave={e=>{(e.currentTarget as HTMLButtonElement).style.background='rgba(255,68,68,0.07)';}}>
-                    <I.Shield/>
-                  </button>
+                  
                 </div>
               </div>
             );

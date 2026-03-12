@@ -31,6 +31,7 @@ const initialUsers = [
 ];
 
 export default function SuperAdminDashboard() {
+
     const [admins, setAdmins] = useState(initialAdmins);
     const [agencies, setAgencies] = useState(initialAgencies);
     const [hosts, setHosts] = useState(initialHosts);
@@ -426,23 +427,23 @@ export default function SuperAdminDashboard() {
             )}
             <style dangerouslySetInnerHTML={{
                 __html: `
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 8px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background-color: rgb(30 41 59);
-          border-radius: 20px;
-        }
-        .fade-in {
-          animation: fadeIn 0.3s ease-in-out;
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
+                .custom-scrollbar::-webkit-scrollbar {
+                    width: 8px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb {
+                    background-color: rgb(30 41 59);
+                    border-radius: 20px;
+                }
+                .fade-in {
+                    animation: fadeIn 0.3s ease-in-out;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
       `}} />
         </div>
     );
